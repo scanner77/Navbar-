@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react'
 import './App.css';
+import axios from 'axios'
+import Navbar from './Navbar/Navbar';
 
 function App() {
+    const[state, setState] = useState([]);
+
+     useEffect( () => {
+       const fetchProducts = async() => {
+        const response = await axios.get('http://localhost:8080/product/getProducts');
+        setState(response)
+       }
+       fetchProducts();
+    }, [])
+    console.log(state)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Navbar />
     </div>
   );
 }
