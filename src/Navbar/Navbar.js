@@ -14,7 +14,9 @@ padding: 20px;
 position: absolute;
 top: 0;
 left: 0;
+margin-bottom: 50px;
 `
+
 
 const Navbar = () => {
  
@@ -37,7 +39,7 @@ const Navbar = () => {
                    </LI>
                
            </UL>
-           <Bar><i onClick = {() => setOpenMenu(!openMenu)} className = "bar" class="fas fa-bars"/></Bar>
+           <Bar><i onClick = {() => setOpenMenu(!openMenu)} className="fas fa-bars"/></Bar>
            </NavWrapper> 
 
     )
