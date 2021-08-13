@@ -42,7 +42,8 @@ export const UL = styled.ul`
 `
 
 export const LI = styled.li`
-
+    cursor: pointer;
+    
     @media all and (max-width: 768px){
     padding: 20px;
     border-bottom: 1px solid white;

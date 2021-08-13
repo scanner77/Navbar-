@@ -1,50 +1,77 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-
+import ApiService from './ApiService'; 
 const Posts = () => {
     const[inputs, setInputs] = useState(
         {
             name: '',
             price: '',
             description:'',
-            selectedFile: ''
+            
         });
+        const[file, setFile] = useState({
+            selectedFile: ''
+        })
 
-        const submitHandler = async (e) => {
+        const submitHandler =  async (e) => {
             e.preventDefault();
-            console.log(inputs)
-           const response = await axios.post('http://localhost:8080/product/saveProducts', inputs);
-            console.log(response )
-        }
-    return (
+            console.log(inputs);
+            const response =  await axios.post('http://localhost:8080/product/uploadProducts', inputs)
+            setInputs(response)
+            
+        };
+        console.log(inputs )
+            setInputs({
+            name: '',
+            price: '',
+            description:'',
+            })
         
+        const onFileChangeHandler = (e) => {
+            setFile({selectedField: e.target.files[0]})
+            const formData = new FormData();
+            formData.append('file', file.selectedFile);
+            ApiService.upload(formData)
+            .then(res => {
+                    console.log(res.data);
+                    alert("File uploaded successfully.")
+            })
+        }
+
+
+    return (
         <>
-           <form onSubmit = {submitHandler} style = {{display: 'flex', justifyContent: 'center', flexDirection: 'column', width: '400px'}}>
+           <form onSubmit = {submitHandler} style = {{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
+           <label>Title</label>
             <input 
             type = "text" 
             value = {inputs.name} 
-            placeholder = "Enter your name" 
+            placeholder = "Title" 
             onChange = {(e) => setInputs({...inputs, name:  e.target.value})}
             />
+            <label>Price</label>
             <input 
             type = "text" 
             value = {inputs.price} 
-            placeholder = "Enter the price" 
+            placeholder = "Price" 
             onChange = {(e) => setInputs({...inputs, price:  e.target.value})}
             />
+            <label>Description</label>
             <input 
             type = "text" 
             value = {inputs.description} 
-            placeholder = "Give the description" 
+            placeholder = "Description" 
             onChange = {(e) => setInputs({...inputs, description:  e.target.value})}
             />
+            <label>Image</label>
             <input 
-            type = "text" 
-            value = {inputs.selectedFile} 
-            placeholder = "Choose the product photos" 
-            onChange = {(e) => setInputs({...inputs, selectedFile:  e.target.value})}
-            />
-            <button type = "submit" >Post</button>
+                        value = {inputs.selectedFile} 
+                        type = "file"
+                        name = "file"
+                        multiple = {false}
+                        onChange = {onFileChangeHandler()} />
+            <br/>
+            <button type = "submit" >Upload</button>
             </form> 
 
         </>

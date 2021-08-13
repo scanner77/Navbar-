@@ -4,6 +4,8 @@ import axios from 'axios'
 import Products from './Products/Products';
 import Navbar from './Navbar/Navbar';
 import Posts from './Posts/Posts';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
 function App() {
     const[state, setState] = useState([]);
     
@@ -17,11 +19,23 @@ function App() {
     console.log(state)
 
   return (
+    <Router>
     <div className="App">
-     <Navbar /> <br/>
+     <Navbar /> 
+     <br/>
+     <br/>
+     <br/>
+
+     <Switch>
+       <Route path = "/" exact>
      <Products products = {state}/>
+     </Route>
+     <Route path = "/postProducts">
      <Posts />
+     </Route>
+     </Switch>
     </div>
+    </Router>
   );
 }
 
