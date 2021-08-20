@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardMedia, CardContent, Typography, Button } from '@material-ui/core' 
 
-const CartItem = ({cartProduct ,removeFromCart, addToCart}) => {
+const CartItem = ({cartProduct ,removeFromCart, addToCart, removeAItem}) => {
     var blob = new Blob([new Uint8Array(cartProduct.image)],{type: 'image/jpg'})
 
     return (
@@ -14,10 +14,15 @@ const CartItem = ({cartProduct ,removeFromCart, addToCart}) => {
             <Button onClick={() => removeFromCart(cartProduct)} className="remove">
                 -
             </Button>
+            <h3>{cartProduct.qty}</h3>
             <Button onClick={() => addToCart(cartProduct)} className="add">
                 +
             </Button>
+            <Button onClick={() => removeAItem(cartProduct)} className="add">
+                +
+            </Button>
             </CardContent>
+            <Typography>Subtotal: {cartProduct.qty} x {cartProduct.price.toFixed(2)} </Typography>
        </Card>
     )
 }
